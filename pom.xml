@@ -27,7 +27,7 @@
   <version>0.7.0-SNAPSHOT</version>
   <name>Zeppelin</name>
   <description>Zeppelin project</description>
-  <url>http://zeppelin.apache.org/</url>
+  <url>http://zeppelin.apache.org</url>
 
   <parent>
     <groupId>org.apache</groupId>
@@ -72,6 +72,7 @@
     <module>lens</module>
     <module>cassandra</module>
     <module>elasticsearch</module>
+    <module>bigquery</module>
     <module>alluxio</module>
     <module>zeppelin-web</module>
     <module>zeppelin-server</module>
@@ -341,18 +342,17 @@
       </plugin>
 
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-remote-resources-plugin</artifactId>
-        <version>1.4</version>
+        <version>1.5</version>
         <executions>
           <execution>
+            <id>process-remote-resources</id>
             <goals>
               <goal>process</goal>
             </goals>
             <configuration>
               <resourceBundles>
-                <!-- Will generate META-INF/DEPENDENCIES META-INF/LICENSE META-INF/NOTICE -->
-                <resourceBundle>org.apache.apache.resources:apache-jar-resource-bundle:1.5-SNAPSHOT</resourceBundle>
+                <resourceBundle>org.apache:apache-jar-resource-bundle:1.0</resourceBundle>
               </resourceBundles>
             </configuration>
           </execution>
@@ -425,7 +425,7 @@
               <exclude>.github/*</exclude>
               <exclude>.gitignore</exclude>
               <exclude>.repository/</exclude>
-  	          <exclude>.Rhistory</exclude>
+              <exclude>.Rhistory</exclude>
               <exclude>**/*.diff</exclude>
               <exclude>**/*.patch</exclude>
               <exclude>**/*.avsc</exclude>
@@ -460,10 +460,13 @@
               <exclude>spark-*-bin*/**</exclude>
               <exclude>.spark-dist/**</exclude>
               <exclude>**/interpreter-setting.json</exclude>
+              <exclude>**/constants.json</exclude>
 
               <!-- bundled from bootstrap -->
               <exclude>docs/assets/themes/zeppelin/bootstrap/**</exclude>
               <exclude>docs/assets/themes/zeppelin/css/style.css</exclude>
+              <exclude>docs/assets/themes/zeppelin/js/docs.js</exclude>
+              <exclude>docs/assets/themes/zeppelin/js/search.js</exclude>
               <exclude>docs/_includes/themes/zeppelin/_jumbotron.html</exclude>
               <exclude>docs/_includes/themes/zeppelin/_navigation.html</exclude>
 
@@ -481,13 +484,18 @@
               <exclude>docs/Rakefile</exclude>
               <exclude>docs/rss.xml</exclude>
               <exclude>docs/sitemap.txt</exclude>
+              <exclude>docs/search_data.json</exclude>
               <exclude>**/dependency-reduced-pom.xml</exclude>
+              <exclude>docs/CONTRIBUTING.md</exclude>
 
               <!-- bundled from anchor -->
               <exclude>docs/assets/themes/zeppelin/js/anchor.min.js</exclude>
 
               <!-- bundled from toc -->
               <exclude>docs/assets/themes/zeppelin/js/toc.js</exclude>
+
+              <!-- bundled from lunrjs -->
+              <exclude>docs/assets/themes/zeppelin/js/lunr.min.js</exclude>
 
               <!-- bundled from jekyll -->
               <exclude>docs/assets/themes/zeppelin/css/syntax.css</exclude>
@@ -651,7 +659,7 @@
     <profile>
       <id>scala-2.10</id>
       <activation>
-        <property><name>!scala-2.11</name></property>
+        <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
         <scala.version>2.10.5</scala.version>
@@ -661,9 +669,6 @@
 
     <profile>
       <id>scala-2.11</id>
-      <activation>
-        <property><name>scala-2.11</name></property>
-      </activation>
       <properties>
         <scala.version>2.11.7</scala.version>
         <scala.binary.version>2.11</scala.binary.version>

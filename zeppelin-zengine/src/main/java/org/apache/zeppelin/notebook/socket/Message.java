@@ -114,6 +114,9 @@ public class Message {
     CHECKPOINT_NOTEBOOK,    // [c-s] checkpoint notebook to storage repository
                             // @param noteId
                             // @param checkpointName
+
+    LIST_REVISION_HISTORY,  // [c-s] list revision history of the notebook
+                            // @param noteId
     NOTE_REVISION,          // [c-s] get certain revision of note
                             // @param noteId
                             // @param revisionId
@@ -124,8 +127,14 @@ public class Message {
     APP_STATUS_CHANGE,      // [s-c] on app status change
 
     LIST_NOTEBOOK_JOBS,     // [c-s] get notebook job management infomations
-    LIST_UPDATE_NOTEBOOK_JOBS // [c-s] get job management informations for until unixtime
+    LIST_UPDATE_NOTEBOOK_JOBS, // [c-s] get job management informations for until unixtime
                                // @param unixTime
+    GET_INTERPRETER_BINDINGS, // [c-s] get interpreter bindings
+                              // @param noteID
+    SAVE_INTERPRETER_BINDINGS, // [c-s] save interpreter bindings
+                               // @param noteID
+                               // @param selectedSettingIds
+    INTERPRETER_BINDINGS // [s-c] interpreter bindings
   }
 
   public OP op;
